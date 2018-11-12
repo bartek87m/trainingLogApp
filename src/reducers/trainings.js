@@ -33,7 +33,8 @@ export default (state = trainingsReducerDefault, action) => {
                         ...training,
                         ...action.updates
                     }
-                }else{
+                }
+                else{
                     return training;
                 }
             });
