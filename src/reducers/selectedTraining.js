@@ -1,13 +1,12 @@
-export default (state = [], action) => {
-    switch(action.type){
+export default (state = {}, action) => {
+    switch (action.type) {
         case 'SHOW WORKOUT':
             return {
-                selectedWorkout: action.id
-            }
+            selectedWorkout: action.id
+        }
         case 'DELETE WORKOUT':
-            return selectedWorkout.filter((value) => value.id !== action.id)
+            return []
         default:
             return state;
-  }
-    
+    }
 }

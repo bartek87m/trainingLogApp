@@ -1,21 +1,20 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import TrainingLogForm from './TrainingLogForm';
-import {addTraining, editTraining} from '../actions/training';
+import {startAddTraining, startEditTraining} from '../actions/training';
 
 class AddTraining extends React.Component{
 
   addEditNewWorkout = (training) => {
-    console.log(training);
+    console.log("training", training);
     if(training.edited === true){
-      this.props.editTraining(training);
+      delete training.edited;
+      this.props.startEditTraining(training);
     }
     else{
-      this.props.addTraining(training);
+      delete training.edited;
+      this.props.startAddExpense(training);
     }
-      // this.props.addTraining(training);
-      // this.props.editTraining(training.id);
-    // } 
   }
 
   render(){
@@ -28,16 +27,10 @@ class AddTraining extends React.Component{
 
 };
 
-const mapStateToProps = (state) => {
-  return{
-    selectedTrainingId: state.selectedTraining.selectedWorkout
-  }
-}
-
 const mapDispatchToProps = (dispatch) => ({ //pozwala zwrócić dispatch poza komponentem
-  addTraining: (training) => dispatch(addTraining(training)),
-  editTraining: (id) => dispatch(editTraining(id))
+  startAddExpense: (training) => dispatch(startAddTraining(training)),
+  startEditTraining: (training) => dispatch(startEditTraining(training))
   
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddTraining);
+export default connect(undefined, mapDispatchToProps)(AddTraining);

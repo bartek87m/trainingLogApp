@@ -10,6 +10,22 @@
   text-decoration: none;
 }
 
+.button--list-item-show{
+  width: 30px;
+  height: 30px;
+  background: $blue;
+  border: none;
+  color: white;
+  text-decoration: none;
+}
+
+.button--list-item-delete{
+  @extend .button--list-item-show;
+  background: red;
+}
+
+
+
 .button--link {
   background: none;
 }

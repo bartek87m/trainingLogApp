@@ -35,6 +35,11 @@
   }
 }
 
+.list-item--selected{
+  @extend .list-item;
+  background: $light-grey;
+}
+
 .list-item--message {
   align-items: center;
   color: $grey;
@@ -46,8 +51,11 @@
 }
 
 .list-item__title {
-  margin: 0;
+  border: 1px solid darken($off-white, 7%);
+  max-width: 30vw;
+  text-align: center;
   word-break: break-all;
+  
 }
 
 .list-item__sub-title {

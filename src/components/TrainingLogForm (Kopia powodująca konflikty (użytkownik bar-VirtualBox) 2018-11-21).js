@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { showSelectedWorkout } from '../actions/selectedTraining';
 import { editTraining } from '../actions/training';
 
 export class TrainingLogForm extends React.Component {
@@ -7,7 +8,7 @@ export class TrainingLogForm extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            id:"",
+            // id:"",
             training_title: props.training_data ? props.training_data.training_title:'',
             training_body: props.training_data ? props.training_data.training_body:'',
             error_no_title: "",
@@ -19,7 +20,7 @@ export class TrainingLogForm extends React.Component {
     componentDidUpdate = (prevState) => {
         
         if(this.state.selectedWorkoutId !== this.props.selectedWorkoutId){
-            const selectedWorkoutId = this.props.selectedWorkoutId;
+            // const selectedWorkoutId = this.props.selectedWorkoutId;
             const training_title = this.props.selectedWorkoutTitle;
             const training_body = this.props.selectedWorkoutBody;
 
@@ -27,7 +28,7 @@ export class TrainingLogForm extends React.Component {
         } 
         
         if(this.props.selectedWorkoutId !== prevState.selectedWorkoutId){
-            const selectedWorkoutId = "";
+            // const selectedWorkoutId = "";
             const training_title = "";
             const training_body = "";
 
@@ -54,6 +55,7 @@ export class TrainingLogForm extends React.Component {
     }
 
     addEditNewWorkout = (edited) => {
+        // e.preventDefault();
         const uuid = require('uuid');
         console.log(uuid());
 
@@ -68,12 +70,18 @@ export class TrainingLogForm extends React.Component {
         }
 
         if(!!this.state.training_title & !!this.state.training_body ){
-            this.props.onSubmit({
-                edited,
-                id: this.state.selectedWorkoutId,
-                training_body: this.state.training_body,
-                training_title: this.state.training_title
-            });          
+            this.setState(() => (
+                edited ?  {id: this.state.selectedWorkoutId} : {id:uuid()}
+                ), () => {
+                    this.props.onSubmit({
+                        edited,
+                        id: this.state.id,
+                        training_body: this.state.training_body,
+                        training_title: this.state.training_title
+                });
+                const id = this.state.id;
+                this.props.showSelectedTrainingData(id);
+            })            
         }
     }
 
@@ -113,7 +121,7 @@ export class TrainingLogForm extends React.Component {
 const mapStateToProps = (state) => {
     
     let zmienna = state.training.filter((value) => value.id === state.selectedTraining.selectedWorkout );
-
+    console.log("zmienna"+zmienna[0]);
     if(zmienna.length > 0){
         return {
             selectedWorkoutId: zmienna[0].id, 
@@ -129,7 +137,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
- 
+    showSelectedTrainingData: (id) => dispatch(showSelectedWorkout(id)),
     editSelectedWorkout: (id) => dispatch(editTraining(id))
 })
 

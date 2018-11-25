@@ -26,9 +26,10 @@ export default (state = trainingsReducerDefault, action) => {
         //     return newState;
             
         case 'EDIT TRAINING':
-            console.log(action);
             return state.map((training)=>{
                 if (training.id === action.updates.id){
+                    console.log("training ID", training.id);
+                    console.log("Update ID", action.updates.id);
                     return{
                         ...training,
                         ...action.updates
@@ -39,8 +40,10 @@ export default (state = trainingsReducerDefault, action) => {
                 }
             });
 
-        case 'SET TRAINING':
-            return action.training;   
+        case 'GET TRAINING':
+            return action.trainings;   
+        
+       
                   
         default:
             return state;

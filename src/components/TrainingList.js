@@ -14,15 +14,14 @@ export class TrainingList extends React.Component {
         }
     }
 
-    componentDidUpdate = () => {
-        alert("updated");
-    }
-
     render(){
         const uuid = require('uuid');
         return (
-            <div>
-                {
+            <div>   
+                <div className="list-item__title">
+                    Amount: {this.props.training.length}
+                </div>
+                {   
                     this.props.training.length > 0 ? (
                         this.props.training.map((training) => {
                             return <TrainingListItem key={uuid()} {...training} />
