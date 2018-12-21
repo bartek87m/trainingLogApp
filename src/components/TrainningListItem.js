@@ -29,7 +29,6 @@ export class TrainingListItem extends React.Component {
     }
 
     render(){
-        let striptags = require('striptags');
         return(
             <div className={this.props.listItem} onClick={this.showWorkout}>
                 <div className="list-item--content" >
@@ -43,8 +42,8 @@ export class TrainingListItem extends React.Component {
                     <p className="list-item-body">
                         {                   
                             this.props.training_body.length < 30 ? 
-                                striptags(this.props.training_body).replace(/&nbsp;/g, ' ') : 
-                                    striptags(this.props.training_body).substring(0,30).replace(/&nbsp;/g, ' ') + "..." 
+                                this.props.training_body.replace(/&nbsp;/g, ' ') : 
+                                    this.props.training_body.substring(0,30).replace(/&nbsp;/g, ' ') + "..." 
                         }
                     </p>
                     <p className="list-item-date">{moment(this.props.createdAt).format("LLL")}</p>
