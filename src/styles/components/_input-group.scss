@@ -2,7 +2,9 @@
   display: flex;
   flex-direction: column;
   margin-bottom: $m-size;
+  border: none;
   @media (min-width: $desktop-breakpoint) {
+    border: none;
     flex-direction: row;
     margin-bottom: $l-size;
   }
@@ -14,3 +16,4 @@
     margin: 0 $s-size 0 0;
   }
 }
+

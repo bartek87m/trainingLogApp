@@ -10,17 +10,32 @@
   text-decoration: none;
 }
 
-.button--list-item-show{
-  width: 30px;
-  height: 30px;
-  background: $blue;
-  border: none;
-  color: white;
-  text-decoration: none;
+.button--show--toolbar{
+    visibility: visible;
+    background: none;
+    color: white;
+    border: none;
+    text-align: center;
+  @media (min-width: 800px){
+    visibility: hidden;
+  }
+}
+
+.button--list-item-icon{
+    width: 20px;
+    height: 20px;
+    background: $blue;
+    border: none;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0;
+    margin: 0; 
+    margin-right: 2%;
 }
 
 .button--list-item-delete{
-  @extend .button--list-item-show;
+  @extend .button--list-item-icon;
   background: red;
 }
 

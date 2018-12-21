@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { startRemoveTraining, deleteSelectedWorkout} from '../actions/training';
 import { showSelectedWorkout } from '../actions/selectedTraining';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,12 +10,13 @@ export class TrainingListItem extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            selected: "list-item"
+            selected: "list-item",
         }
     }
     showWorkout = () => {
         const id = this.props.id;
         this.props.showSelectedTrainingData(id);
+        this.props.hideToolbar();
     }
 
     removeWorkout = () => {
@@ -22,13 +24,35 @@ export class TrainingListItem extends React.Component {
         this.props.startRemoveTraining(id);
     }
 
+    showIcon(){
+        
+    }
+
     render(){
+        let striptags = require('striptags');
         return(
-            <div className={this.props.listItem} >
-                <p>{this.props.training_title}</p>
-                <p>{this.props.training_body}</p>
-                <button className="button" onClick={this.showWorkout}><FontAwesomeIcon icon="eye"/></button>
-                <button className="button" onClick={this.removeWorkout}><FontAwesomeIcon icon="trash"/></button>         
+            <div className={this.props.listItem} onClick={this.showWorkout}>
+                <div className="list-item--content" >
+                    <p className="list-item-title"> 
+                        {
+                            this.props.training_title.length < 20 ? 
+                                this.props.training_title : 
+                                    this.props.training_title.substring(0,20) + "..."      
+                        }
+                    </p>
+                    <p className="list-item-body">
+                        {                   
+                            this.props.training_body.length < 30 ? 
+                                striptags(this.props.training_body).replace(/&nbsp;/g, ' ') : 
+                                    striptags(this.props.training_body).substring(0,30).replace(/&nbsp;/g, ' ') + "..." 
+                        }
+                    </p>
+                    <p className="list-item-date">{moment(this.props.createdAt).format("LLL")}</p>
+                </div>
+                <div>
+                    {/* <button className="button--list-item-icon" onClick={this.showWorkout}><FontAwesomeIcon icon="eye"/></button> */}
+                    <button className="button--list-item-icon" onClick={this.removeWorkout}><FontAwesomeIcon icon="trash"/></button>         
+                </div>
             </div>
         )
     }

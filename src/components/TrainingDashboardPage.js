@@ -1,14 +1,25 @@
 import React from 'react';
 import AddTrainingPage from './AddTrainingPage';
-import TrainingList from './TrainingList';
 
-const TrainingDashboardPage = () => (
-    <div className="content-container">
-        <div className="container-right"><AddTrainingPage/></div>
-        <div className="container-left"><TrainingList/></div>
-        
-        
-    </div>
-);
+
+class TrainingDashboardPage extends React.Component{
+
+    constructor(props){
+        super(props);
+
+    }
+   
+    render(){
+        return(
+            <div>
+            {
+                <div className="content-container">
+                    <AddTrainingPage/>
+                </div>    
+            }
+            </div>       
+        )
+    }
+};
 
 export default TrainingDashboardPage;

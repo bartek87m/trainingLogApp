@@ -1,17 +1,23 @@
 .text-input {
-  height: 50px;
+  height: 30px;
+  width: 100%;
   font-size: $font-size-large;
   font-weight: 300;
-  padding: $s-size;
+  padding: none;
   border: none;
+  text-align: center;
 }
 
-.textarea-input{
-  height: 50vh;
+.inputEditable{
+  font-size: $xs-size;
+  height: 60vh;
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
 .select {
   @extend .text-input;
+  background: white;
 }
 
 .textarea {

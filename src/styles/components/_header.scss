@@ -3,10 +3,12 @@
 }
 
 .header__content {
+  height: 100%;
   align-items: center;
   display: flex;
   justify-content: space-between;
-  padding: $s-size 0;
+  padding: $s-size;
+  
 }
 
 .header__title {

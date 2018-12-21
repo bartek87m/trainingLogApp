@@ -1,23 +1,41 @@
 import React from 'react';
+import ContentEditable from 'react-contenteditable';
 import { connect } from 'react-redux';
 import { editTraining } from '../actions/training';
+import { showSelectedWorkout } from '../actions/selectedTraining';
+import { clearInterval } from 'timers';
 
 export class TrainingLogForm extends React.Component {
 
     constructor(props){
         super(props);
+        this.contentEditable = React.createRef();
         this.state = {
             id:"",
             training_title: props.training_data ? props.training_data.training_title:'',
             training_body: props.training_data ? props.training_data.training_body:'',
+            createdAt: "",
             error_no_title: "",
             error_no_body: "",
-            selectedWorkoutId: ""
+            selectedWorkoutId: "",
+            isTimerActive: false
         }
     }
 
+
+    componentDidMount = (prevState) => {    
+       
+        if((this.state.selectedWorkoutId === '') & (this.props.selectedWorkoutId !== '')){
+            const selectedWorkoutId = this.props.selectedWorkoutId;
+            const training_title = this.props.selectedWorkoutTitle;
+            const training_body = this.props.selectedWorkoutBody;
+
+            this.setState({selectedWorkoutId, training_title, training_body});
+        } 
+    }
+
     componentDidUpdate = (prevState) => {
-        
+
         if(this.state.selectedWorkoutId !== this.props.selectedWorkoutId){
             const selectedWorkoutId = this.props.selectedWorkoutId;
             const training_title = this.props.selectedWorkoutTitle;
@@ -35,50 +53,65 @@ export class TrainingLogForm extends React.Component {
         }
     }
 
+    saveAfterFinishWrite = () => {
+        let timer;
+        if(this.state.isTimerActive === false){
+            timer = setTimeout(this.saveWorkout,2000);
+            this.state.isTimerActive = true;
+        }  
+    }
+
     onTitleChange = (e) => {   
-        const training_title = e.target.value;
-        this.setState({training_title}, () => {
-            if(!!training_title){
-                this.setState(() => ({error_no_title:""}))
-            }
-        });    
+      
+        this.saveAfterFinishWrite();
+        let training_title = e.target.value 
+
+        if(!training_title) {
+            training_title = "WPISZ TYTUŁ";
+        }
+        this.setState(() => ({training_title}));
     }
 
     onWorkoutChange = (e) => {
-        const training_body = e.target.value;
-        this.setState({training_body}, () => {
-            if(!!training_body){
-                this.setState(() => ({error_no_body:""}))
-            } 
-        });
+
+        this.saveAfterFinishWrite();
+        let training_body = e.target.value 
+
+        if(!training_body) {
+            training_body = "WPISZ TRENING";
+        }
+        this.setState(() => ({training_body}));
     }
 
     addEditNewWorkout = (edited) => {
         const uuid = require('uuid');
-        console.log(uuid());
 
-        if(!this.state.training_title) {
-            const error_no_title = "Wpisz tytuł";
-            this.setState(() => ({error_no_title}));
-        } 
+        // if(!this.state.training_title) {
+        //     const training_title = "WPISZ TYTUŁ";
+        //     this.setState(() => ({training_title}));
+        // } 
 
-        if(!this.state.training_body) {
-            const error_no_body = "Wpisz trening";
-            this.setState(() => ({error_no_body}));
-        }
+        // if(!this.state.training_body) {
+        //     const training_body = "WPISZ TRENING";
+        //     this.setState(() => ({training_body}));
+        // }
 
         if(!!this.state.training_title & !!this.state.training_body ){
+            var date = Date.now();
             this.props.onSubmit({
                 edited,
                 id: this.state.selectedWorkoutId,
                 training_body: this.state.training_body,
-                training_title: this.state.training_title
+                training_title: this.state.training_title,
+                createdAt: date
             });          
         }
     }
 
     saveWorkout = () => {
         this.addEditNewWorkout(true);
+        this.state.isTimerActive = false;
+        console.log("Workout saved");
     }
 
     addNewWorkout = () => {
@@ -90,20 +123,22 @@ export class TrainingLogForm extends React.Component {
                 <div className="form" onSubmit={this.onSubmit}>
                     {this.state.error_no_title}                  
                     <input 
+                        className="input-group"
                         type='text' 
                         placeholder='tytuł'    
                         value={this.state.training_title}
                         onChange={this.onTitleChange}
                     />
                     {this.state.error_no_body}
-                    <textarea 
-                        rows='10' 
-                        cols='20' 
-                        placeholder='Wpisz swój trening'
-                        value={this.state.training_body}
-                        onChange={this.onWorkoutChange}
-                        ></textarea>
-                    <button onClick={this.saveWorkout}>Save</button>    
+
+                    <ContentEditable className="inputEditable"
+                        spellCheck = {false}
+                        innerRef={this.contentEditable}
+                        html={this.state.training_body} // innerHTML of the editable div
+                        disabled={false}       // use true to disable editing
+                        onChange={this.onWorkoutChange} // handle innerHTML change
+                        tagName='article' // Use a custom HTML tag (uses a div by default)
+                    /> 
                     <button onClick={this.addNewWorkout}>Add New</button>  
                 </div>
             )

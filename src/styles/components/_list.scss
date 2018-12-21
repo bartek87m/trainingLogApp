@@ -15,29 +15,64 @@
 }
 
 .list-item {
-  max-width: 30vw;
+  max-width: 100%;
   border: 1px solid darken($off-white, 7%);
   border-top: none;
   color: $dark-grey;
+  cursor: pointer;
   display: flex;
-  flex-direction: column;
-  padding: $s-size;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
   text-decoration: none;
   transition: background .3s ease;
+  padding: 0 $s-size 0 $s-size;
   &:hover {
     background: $off-white;
   }
-  @media (min-width: $desktop-breakpoint) {
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: $m-size;
-  }
+}
+
+.list-training{
+    height: 85vh;
+    overflow-y: scroll; 
+}
+
+
+.list-item-body{
+    font-weight: 0;
+    font-style: oblique;
+    font-size: 1rem;
+    text-align: center;
+  
+}
+
+.list-item-title{
+  @extend .list-item-body;
+  text-align: left;
+  font-size: 1.1rem;
+
+
+}
+
+.list-item-date{
+  font-style: oblique;
+  font-size: $s-size;
+  text-align: right;
+  width: 100%;
+  float: right;
+  padding-right: 10%;
 }
 
 .list-item--selected{
   @extend .list-item;
   background: $light-grey;
+}
+
+.list-item--content {
+  width: 950%;
+  min-height: 10vh;
+  // display: inline;
 }
 
 .list-item--message {
@@ -47,15 +82,29 @@
   padding: $m-size;
   &:hover {
     background: none;
+  } 
+}
+
+.list-title {
+  width: 100%;
+  text-align: center;
+  word-break: break-all;
+  border: 1px solid darken($off-white, 7%);
+  @media (min-width: $desktop-breakpoint) {
+    border: 1px solid darken($off-white, 7%);
+    max-width: 30vw;
+    text-align: center;
+    word-break: break-all;
   }
 }
 
-.list-item__title {
-  border: 1px solid darken($off-white, 7%);
-  max-width: 30vw;
-  text-align: center;
-  word-break: break-all;
-  
+.list-search, .list-select{
+  @extend .list-title;
+    border-top: none;
+  @media (min-width: $desktop-breakpoint) {
+    border-top: none;
+  }
+
 }
 
 .list-item__sub-title {
@@ -63,10 +112,3 @@
   font-size: $font-size-small;
 }
 
-.list-item__data {
-  margin: $s-size 0 0 0;
-  @media (min-width: $desktop-breakpoint) {
-    margin: 0;
-    padding-left: $s-size;
-  }
-}

@@ -1,5 +1,6 @@
 import database from '../firebase/firebase'
 import { showSelectedWorkout, deleteSelectedWorkout } from '../actions/selectedTraining';
+import { sortByDate } from '../actions/filters';
 
 export const addTraining = (training) =>({
     type: 'ADD TRAINING',
@@ -53,6 +54,7 @@ export const startGeTrainingData = () => {
                 })
             })
             dispatch(getTrainingData(trainingData));
+            dispatch(sortByDate("dateUp"));
         })
     }
 }
@@ -75,3 +77,4 @@ export const startEditTraining = (updates) => {
         });
     }
 };
+

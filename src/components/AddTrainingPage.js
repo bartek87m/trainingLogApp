@@ -6,14 +6,14 @@ import {startAddTraining, startEditTraining} from '../actions/training';
 class AddTraining extends React.Component{
 
   addEditNewWorkout = (training) => {
-    console.log("training", training);
     if(training.edited === true){
       delete training.edited;
       this.props.startEditTraining(training);
     }
     else{
       delete training.edited;
-      this.props.startAddExpense(training);
+      delete training.id;
+      this.props.startAddTraining(training);
     }
   }
 
@@ -28,7 +28,7 @@ class AddTraining extends React.Component{
 };
 
 const mapDispatchToProps = (dispatch) => ({ //pozwala zwrócić dispatch poza komponentem
-  startAddExpense: (training) => dispatch(startAddTraining(training)),
+  startAddTraining: (training) => dispatch(startAddTraining(training)),
   startEditTraining: (training) => dispatch(startEditTraining(training))
   
 })

@@ -22,6 +22,14 @@ button {
   cursor: pointer;
 }
 
+p{
+  margin: 0;
+}
+
+div{
+  padding: 0;
+}
+
 button:disabled {
   cursor: default;
 }
@@ -29,3 +37,4 @@ button:disabled {
 .is-active {
   font-weight: bold;
 }
+

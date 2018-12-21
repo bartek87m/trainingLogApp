@@ -1,20 +1,14 @@
 .content-container {
-  margin: 0  auto;
-  margin-top: 2vh;
-  padding: 0 $m-size;
-  max-width: 100rem;
-  max-height: 100%;
+  width: 90%;
+  height: 70%;
+  min-height: 30%;
+	margin: 3vh auto 3vh auto;
 }
 
 .container-left{
-  float: left;
-  width: 30rem;
-  height: 80vh;
-  overflow: auto;
+    float: left;
+    width: 25rem;
+    height: 80vh;
 
 }
 
-.container-right{
-  float: right;
-  width: 60rem;
-}

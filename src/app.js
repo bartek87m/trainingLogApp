@@ -11,10 +11,9 @@ import { firebase } from './firebase/firebase';
 import LoadingPage from './components/LoadingPage';
 import { startGeTrainingData } from './actions/training';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faEye } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faBars } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faTrash, faEye)
+library.add(faTrash, faBars)
 
 const store = configureStore();
 const jsx = (
@@ -30,12 +29,14 @@ const renderApp = () => {
   }
 };
 
+// ReactDOM.render(<App />, document.getElementById('app'));
 ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     store.dispatch(login(user.uid));
     store.dispatch(startGeTrainingData()).then(() => {
+      
       renderApp();
       if (history.location.pathname === '/') {
         history.push('/dashboard');
