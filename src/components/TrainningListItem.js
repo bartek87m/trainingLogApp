@@ -24,8 +24,13 @@ export class TrainingListItem extends React.Component {
         this.props.startRemoveTraining(id);
     }
 
-    showIcon(){
-        
+    stripHtml(html){
+        // Create a new div element
+        var temporalDivElement = document.createElement("div");
+        // Set the HTML content with the providen
+        temporalDivElement.innerHTML = html;
+        // Retrieve the text property of the element (cross-browser support)
+        return temporalDivElement.textContent || temporalDivElement.innerText || "";
     }
 
     render(){
@@ -36,14 +41,14 @@ export class TrainingListItem extends React.Component {
                         {
                             this.props.training_title.length < 20 ? 
                                 this.props.training_title : 
-                                    this.props.training_title.substring(0,20) + "..."      
+                                    this.props.training_title.substring(0,30) + "..."      
                         }
                     </p>
                     <p className="list-item-body">
                         {                   
                             this.props.training_body.length < 30 ? 
-                                this.props.training_body.replace(/&nbsp;/g, ' ') : 
-                                    this.props.training_body.substring(0,30).replace(/&nbsp;/g, ' ') + "..." 
+                                this.stripHtml(this.props.training_body):
+                                    this.stripHtml(this.props.training_body).substring(0,30) +  "..." 
                         }
                     </p>
                     <p className="list-item-date">{moment(this.props.createdAt).format("LLL")}</p>
