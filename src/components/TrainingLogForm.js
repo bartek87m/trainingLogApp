@@ -2,8 +2,7 @@ import React from 'react';
 import ContentEditable from 'react-contenteditable';
 import { connect } from 'react-redux';
 import { editTraining } from '../actions/training';
-import { showSelectedWorkout } from '../actions/selectedTraining';
-import { clearInterval } from 'timers';
+import sort from '../selectors/sort';
 
 export class TrainingLogForm extends React.Component {
 
@@ -23,15 +22,14 @@ export class TrainingLogForm extends React.Component {
     }
 
 
-    componentDidMount = (prevState) => {    
+    componentDidMount = () => {    
        
-        if((this.state.selectedWorkoutId === '') & (this.props.selectedWorkoutId !== '')){
             const selectedWorkoutId = this.props.selectedWorkoutId;
             const training_title = this.props.selectedWorkoutTitle;
             const training_body = this.props.selectedWorkoutBody;
 
             this.setState({selectedWorkoutId, training_title, training_body});
-        } 
+        
     }
 
     componentDidUpdate = (prevState) => {
@@ -157,8 +155,11 @@ const mapStateToProps = (state) => {
         };
     }
     else{
-        return {
-            selectedWorkoutId: ""
+        const sortedData = sort(state.training,state.filters.sortBy);
+         return {
+            selectedWorkoutId:  sortedData[0].id,
+            selectedWorkoutTitle: sortedData[0].training_title,
+            selectedWorkoutBody: sortedData[0].training_body
         };
     }
 };

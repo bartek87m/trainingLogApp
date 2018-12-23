@@ -14,6 +14,15 @@ class TrainingListFilter extends React.Component {
         }
     }
 
+    componentDidMount = () => {
+
+        this.setState({sortBy: this.props.sortBy});
+
+        if(this.props.searchData !== undefined){
+            this.setState({searchData:this.props.searchData});
+        }
+    }
+
     searchInTrainings = (e) => {
         const searchData = e.target.value;
         this.setState({searchData}, () => {
@@ -28,7 +37,6 @@ class TrainingListFilter extends React.Component {
         });
         
     }
-
 
     render(){
         return (
@@ -58,7 +66,9 @@ class TrainingListFilter extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        training: state.training
+        training: state.training,
+        searchData: state.searchTraining.searchTraining,
+        sortBy: state.filters.sortBy
     };
 }
 
